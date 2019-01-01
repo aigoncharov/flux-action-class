@@ -1,6 +1,3 @@
-// tslint:disable max-classes-per-file
-import { generate } from 'shortid'
-
 // Allow omitting params typed as undefined
 // https://github.com/Microsoft/TypeScript/issues/12400
 type ActionOptionalSpread<P, M> = P extends undefined
@@ -11,18 +8,13 @@ type ActionOptionalSpread<P, M> = P extends undefined
   ? [P] // P is not undefined, but M is. which means we expect only P
   : [P, M] // Both, P and M, are not undefined, which means we expect both
 
+export const prefix = 'flux-action-class:'
+
 export abstract class ActionStandard<Payload = undefined, Meta = undefined> {
-  public static prefix = generate()
-  public static get type(): string {
-    return `${this.prefix}:${this.name}`
-  }
-  public get type(): string {
-    // https://github.com/Microsoft/TypeScript/issues/3841
-    return ((this.constructor as any) as ActionStandard).type
-  }
   public readonly payload: Payload
   public readonly meta: Meta
   public readonly error: boolean
+  protected readonly _prefix: string = prefix
 
   constructor(...args: ActionOptionalSpread<Payload, Meta>) {
     const payload = args[0] as Payload
@@ -31,5 +23,9 @@ export abstract class ActionStandard<Payload = undefined, Meta = undefined> {
     this.payload = payload
     this.meta = meta
     this.error = payload instanceof Error
+  }
+
+  public get type(): string {
+    return `${this._prefix}${this.constructor.name}`
   }
 }
