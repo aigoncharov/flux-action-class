@@ -1,0 +1,11 @@
+{
+  "*.{js,ts,tsx,json,css,less,yml}": [
+    "./node_modules/.bin/prettier --write",
+    "git add"
+  ],
+  "*.md": [
+    "./node_modules/.bin/doctoc",
+    "./node_modules/.bin/prettier --write",
+    "git add"
+  ]
+}
