@@ -1,7 +1,7 @@
 {
   "name": "flux-action-class",
-  "version": "0.1.0",
-  "description": "Boilerplate free class-based action creator following flux-standard-action spec",
+  "version": "1.0.0",
+  "description": "Boilerplate free class-based action creator following flux-standard-action spec built with TypeScript",
   "main": "dist/index.js",
   "scripts": {
     "test": "npx nyc mocha --opts mocha.opts",
