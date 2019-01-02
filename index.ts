@@ -11,10 +11,13 @@ type ActionOptionalSpread<P, M> = P extends undefined
 export const prefix = 'flux-action-class:'
 
 export abstract class ActionStandard<Payload = undefined, Meta = undefined> {
+  protected static readonly _prefix: string = prefix
+  public static get type() {
+    return `${this._prefix}${this.name}`
+  }
   public readonly payload: Payload
   public readonly meta: Meta
   public readonly error: boolean
-  protected readonly _prefix: string = prefix
 
   constructor(...args: ActionOptionalSpread<Payload, Meta>) {
     const payload = args[0] as Payload
@@ -26,6 +29,7 @@ export abstract class ActionStandard<Payload = undefined, Meta = undefined> {
   }
 
   public get type(): string {
-    return `${this._prefix}${this.constructor.name}`
+    // https://github.com/Microsoft/TypeScript/issues/3841
+    return ((this.constructor as any) as ActionStandard).type
   }
 }
