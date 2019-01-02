@@ -15,6 +15,7 @@ Boilerplate free class-based action creator following [flux-standard-action](htt
   - [Create an action with no payload and meta](#create-an-action-with-no-payload-and-meta)
   - [Create an error action with no meta](#create-an-error-action-with-no-meta)
   - [Create an error action with meta](#create-an-error-action-with-meta)
+  - [Customize action prefix](#customize-action-prefix)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -139,4 +140,17 @@ new ActionTest6(new Error(), 'string') // Correct
 new ActionTest6() // Failure
 new ActionTest6('test') // Failure
 new ActionTest6(5, 45) // Failure
+```
+
+### Customize action prefix
+
+```ts
+import { ActionStandard } from 'flux-action-class'
+
+abstract class AppBaseAction<Payload = undefined, Meta = undefined> extends ActionStandard<Payload, Meta> {
+  protected static readonly _prefix = 'app:'
+}
+
+class ActionTest7 extends AppBaseAction {}
+// Creates action with no payload, no meta, type 'app:ActionTest7' and error = false
 ```
