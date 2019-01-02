@@ -1,5 +1,5 @@
 {
   "hooks": {
-    "pre-commit": "./node_modules/.bin/lint-staged"
+    "pre-commit": "npx lint-staged"
   }
 }

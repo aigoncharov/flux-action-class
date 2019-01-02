@@ -1,11 +1,11 @@
 {
   "*.{js,ts,tsx,json,css,less,yml}": [
-    "./node_modules/.bin/prettier --write",
+    "npx prettier --write",
     "git add"
   ],
   "*.md": [
-    "./node_modules/.bin/doctoc",
-    "./node_modules/.bin/prettier --write",
+    "npx doctoc",
+    "npx prettier --write",
     "git add"
   ]
 }
