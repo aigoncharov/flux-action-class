@@ -1,6 +1,6 @@
 // Allow omitting params typed as undefined
 // https://github.com/Microsoft/TypeScript/issues/12400
-type ActionOptionalSpread<P, M> = P extends undefined
+export type IActionStandardArgs<P, M> = P extends undefined
   ? M extends undefined
     ? [] // It doesn't expect any parameters if both, P and M, are undefined
     : [P, M] // If P is undefined, but M is not, we still have to pass both
@@ -20,7 +20,7 @@ export abstract class ActionStandard<Payload = undefined, Meta = undefined> {
   public readonly meta!: Meta
   public readonly error!: boolean
 
-  constructor(...args: ActionOptionalSpread<Payload, Meta>) {
+  constructor(...args: IActionStandardArgs<Payload, Meta>) {
     const payload = args[0] as Payload
     const meta = args[1] as Meta
 
