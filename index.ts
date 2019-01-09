@@ -33,3 +33,7 @@ export abstract class ActionStandard<Payload = undefined, Meta = undefined> {
     return ((this.constructor as any) as ActionStandard).type
   }
 }
+
+export interface IActionStandardStatic {
+  type: string
+}
