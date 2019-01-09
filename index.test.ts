@@ -2,6 +2,18 @@ import { expect } from 'chai'
 
 import { ActionStandard, prefix } from './index'
 
+// From https://github.com/reduxjs/redux/blob/master/src/utils/isPlainObject.js
+const isPlainObject = (obj: any) => {
+  if (typeof obj !== 'object' || obj === null) return false
+
+  let proto = obj
+  while (Object.getPrototypeOf(proto) !== null) {
+    proto = Object.getPrototypeOf(proto)
+  }
+
+  return Object.getPrototypeOf(obj) === proto
+}
+
 // tslint:disable max-classes-per-file
 describe(ActionStandard.name, () => {
   describe('prefix', () => {
@@ -9,6 +21,7 @@ describe(ActionStandard.name, () => {
       class Test extends ActionStandard {}
       const test = new Test()
       expect(test.type.startsWith(prefix)).to.be.equal(true)
+      expect(isPlainObject(test)).to.be.equal(true)
     })
     it('can be changed', () => {
       const prefixNew = 'test'
@@ -17,6 +30,7 @@ describe(ActionStandard.name, () => {
       }
       const test = new Test()
       expect(test.type.startsWith(prefixNew)).to.be.equal(true)
+      expect(isPlainObject(test)).to.be.equal(true)
     })
     it('can be inherited', () => {
       const prefixNew = 'test'
@@ -26,6 +40,7 @@ describe(ActionStandard.name, () => {
       class TestChild extends TestParent {}
       const test = new TestChild()
       expect(test.type.startsWith(prefixNew)).to.be.equal(true)
+      expect(isPlainObject(test)).to.be.equal(true)
     })
   })
 
@@ -35,12 +50,14 @@ describe(ActionStandard.name, () => {
       const test = new Test()
       expect(Test.type.endsWith('Test')).to.be.equal(true)
       expect(test.type.endsWith('Test')).to.be.equal(true)
+      expect(isPlainObject(test)).to.be.equal(true)
     })
     it("is prefix with class' name", () => {
       class Test extends ActionStandard {}
       const test = new Test()
       expect(Test.type).to.be.equal(`${prefix}Test`)
       expect(test.type).to.be.equal(`${prefix}Test`)
+      expect(isPlainObject(test)).to.be.equal(true)
     })
   })
 
@@ -84,26 +101,6 @@ describe(ActionStandard.name, () => {
       expect(test.payload).to.be.equal(payload)
       expect(test.meta).to.be.equal(undefined)
       expect(test.error).to.be.equal(true)
-    })
-  })
-
-  describe('redux integration', () => {
-    // From https://github.com/reduxjs/redux/blob/master/src/utils/isPlainObject.js
-    const isPlainObject = (obj: any) => {
-      if (typeof obj !== 'object' || obj === null) return false
-
-      let proto = obj
-      while (Object.getPrototypeOf(proto) !== null) {
-        proto = Object.getPrototypeOf(proto)
-      }
-
-      return Object.getPrototypeOf(obj) === proto
-    }
-
-    it('is plain object', () => {
-      class Test extends ActionStandard {}
-      const test = new Test()
-      expect(isPlainObject(test)).to.be.equal(true)
     })
   })
 })
