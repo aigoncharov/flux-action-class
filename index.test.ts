@@ -86,4 +86,24 @@ describe(ActionStandard.name, () => {
       expect(test.error).to.be.equal(true)
     })
   })
+
+  describe('redux integration', () => {
+    // From https://github.com/reduxjs/redux/blob/master/src/utils/isPlainObject.js
+    const isPlainObject = (obj: any) => {
+      if (typeof obj !== 'object' || obj === null) return false
+
+      let proto = obj
+      while (Object.getPrototypeOf(proto) !== null) {
+        proto = Object.getPrototypeOf(proto)
+      }
+
+      return Object.getPrototypeOf(obj) === proto
+    }
+
+    it('is plain object', () => {
+      class Test extends ActionStandard {}
+      const test = new Test()
+      expect(isPlainObject(test)).to.be.equal(true)
+    })
+  })
 })

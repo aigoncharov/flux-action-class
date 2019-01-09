@@ -10,6 +10,7 @@
     ".tsx"
   ],
   "exclude": [
+    "dist/**.*",
     "**/*.d.ts",
     "**/*.test.ts"
   ],

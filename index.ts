@@ -15,22 +15,22 @@ export abstract class ActionStandard<Payload = undefined, Meta = undefined> {
   public static get type() {
     return `${this._prefix}${this.name}`
   }
-  public readonly payload: Payload
-  public readonly meta: Meta
-  public readonly error: boolean
+  public readonly type!: string
+  public readonly payload!: Payload
+  public readonly meta!: Meta
+  public readonly error!: boolean
 
   constructor(...args: ActionOptionalSpread<Payload, Meta>) {
     const payload = args[0] as Payload
     const meta = args[1] as Meta
 
-    this.payload = payload
-    this.meta = meta
-    this.error = payload instanceof Error
-  }
-
-  public get type(): string {
-    // https://github.com/Microsoft/TypeScript/issues/3841
-    return ((this.constructor as any) as ActionStandard).type
+    // Actions must be plain objects
+    return {
+      error: payload instanceof Error,
+      meta,
+      payload,
+      type: ((this.constructor as any) as ActionStandard).type,
+    }
   }
 }
 
