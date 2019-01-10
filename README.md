@@ -161,3 +161,5 @@ class ActionTest7 extends AppBaseAction {}
 Be aware, if you're using `switch-case` based reducers, TS compiler is no longer capable of automatic union discrimination, in other words the compiler can no longer match action's type by its field `type`.
 
 Consider going with selecting a reducer from a map by key ([relevant article (go to Tip 3: Switch away from switch)](https://medium.com/@andreygoncharov/yet-another-guide-to-reduce-boilerplate-in-your-redux-ngrx-app-3794a2dd7bf), [Redux's official documentation](https://redux.js.org/recipes/reducing-boilerplate#generating-reducers)) or using [ngrx-actions](https://github.com/amcdnl/ngrx-actions) instead.
+
+You can take a look at the discussion [here](https://github.com/keenondrums/flux-action-class/issues/1)
