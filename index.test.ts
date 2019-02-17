@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { ActionStandard, prefix } from './index'
+import { ActionStandard, prefixDefault, setPrefix } from './index'
 
 // From https://github.com/reduxjs/redux/blob/master/src/utils/isPlainObject.js
 const isPlainObject = (obj: any) => {
@@ -20,14 +20,22 @@ describe(ActionStandard.name, () => {
     it('exists', () => {
       class Test extends ActionStandard {}
       const test = new Test()
-      expect(test.type.startsWith(prefix)).to.be.equal(true)
+      expect(test.type.startsWith(prefixDefault)).to.be.equal(true)
       expect(isPlainObject(test)).to.be.equal(true)
     })
-    it('can be changed', () => {
+    it('can be changed via subsclassing', () => {
       const prefixNew = 'test'
       class Test extends ActionStandard {
-        protected static readonly _prefix = prefixNew
+        protected static readonly prefix = prefixNew
       }
+      const test = new Test()
+      expect(test.type.startsWith(prefixNew)).to.be.equal(true)
+      expect(isPlainObject(test)).to.be.equal(true)
+    })
+    it('can be changed via setPrefix', () => {
+      const prefixNew = 'test'
+      setPrefix(prefixNew)
+      class Test extends ActionStandard {}
       const test = new Test()
       expect(test.type.startsWith(prefixNew)).to.be.equal(true)
       expect(isPlainObject(test)).to.be.equal(true)
@@ -35,7 +43,7 @@ describe(ActionStandard.name, () => {
     it('can be inherited', () => {
       const prefixNew = 'test'
       class TestParent extends ActionStandard {
-        protected static readonly _prefix = prefixNew
+        protected static readonly prefix = prefixNew
       }
       class TestChild extends TestParent {}
       const test = new TestChild()
@@ -55,8 +63,8 @@ describe(ActionStandard.name, () => {
     it("is prefix with class' name", () => {
       class Test extends ActionStandard {}
       const test = new Test()
-      expect(Test.type).to.be.equal(`${prefix}Test`)
-      expect(test.type).to.be.equal(`${prefix}Test`)
+      expect(Test.type).to.be.equal(`${prefixDefault}Test`)
+      expect(test.type).to.be.equal(`${prefixDefault}Test`)
       expect(isPlainObject(test)).to.be.equal(true)
     })
   })

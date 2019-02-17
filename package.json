@@ -1,6 +1,6 @@
 {
   "name": "flux-action-class",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Boilerplate free class-based action creator. Following flux-standard-action spec. Built with TypeScript.",
   "main": "dist/index.js",
   "scripts": {

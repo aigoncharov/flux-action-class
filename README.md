@@ -16,6 +16,8 @@ Boilerplate free class-based action creator. Following [flux-standard-action](ht
   - [Create an error action with no meta](#create-an-error-action-with-no-meta)
   - [Create an error action with meta](#create-an-error-action-with-meta)
   - [Customize action prefix](#customize-action-prefix)
+    - [Sub-classing](#sub-classing)
+    - [Using `setPrefix`](#using-setprefix)
 - [Usage in reducers](#usage-in-reducers)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -51,7 +53,7 @@ const reducer = (state, action) => {
 - Own (non-static) `payload` readonly field typed as the first generic (`undefined` by default)
 - Own (non-static) `meta` readonly field typed as the second generic (`undefined` by default)
 - Own (non-static) `error` readonly boolean field set to `true` if payload is an instance of `Error`
-- Protected static `_prefix` field which is the the first part of `type` set to 'flux-action-class:' by default
+- Protected static `prefix` field which is the the first part of `type` set to 'flux-action-class:' by default
 
 ## Examples
 
@@ -145,14 +147,28 @@ new ActionTest6(5, 45) // Failure
 
 ### Customize action prefix
 
+#### Sub-classing
+
 ```ts
 import { ActionStandard } from 'flux-action-class'
 
 abstract class AppBaseAction<Payload = undefined, Meta = undefined> extends ActionStandard<Payload, Meta> {
-  protected static readonly _prefix = 'app:'
+  protected static readonly prefix = 'app:'
 }
 
 class ActionTest7 extends AppBaseAction {}
+// Creates action with no payload, no meta, type 'app:ActionTest7' and error = false
+```
+
+#### Using `setPrefix`
+
+```ts
+import { ActionStandard, setPrefix } from 'flux-action-class'
+
+// Add it only once and it changes default prefix for all actions
+setPrefix('app:')
+
+class ActionTest7 extends ActionStandard {}
 // Creates action with no payload, no meta, type 'app:ActionTest7' and error = false
 ```
 

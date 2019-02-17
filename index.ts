@@ -8,12 +8,21 @@ export type IActionStandardArgs<P, M> = P extends undefined
   ? [P] // P is not undefined, but M is. which means we expect only P
   : [P, M] // Both, P and M, are not undefined, which means we expect both
 
-export const prefix = 'flux-action-class:'
+export let prefixDefault = 'flux-action-class:'
+export const setPrefix = (newPrefix: string) => {
+  prefixDefault = newPrefix
+}
 
 export abstract class ActionStandard<Payload = undefined, Meta = undefined> {
-  protected static readonly _prefix: string = prefix
+  private static get prefixFinal(): string {
+    if (this.prefix) {
+      return this.prefix
+    }
+    return prefixDefault
+  }
+  protected static readonly prefix?: string
   public static get type() {
-    return `${this._prefix}${this.name}`
+    return `${this.prefixFinal}${this.name}`
   }
   public readonly type!: string
   public readonly payload!: Payload
