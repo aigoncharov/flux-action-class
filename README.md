@@ -1,4 +1,4 @@
-# flux-action-class [![Build Status](https://travis-ci.org/keenondrums/flux-action-class.svg?branch=master)](https://travis-ci.org/keenondrums/flux-action-class)
+# flux-action-class [![Build Status](https://travis-ci.org/keenondrums/flux-action-class.svg?branch=master)](https://travis-ci.org/keenondrums/flux-action-class) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Boilerplate%20free%20class-based%20action%20creator&url=https://github.com/keenondrums/flux-action-class&hashtags=javascript,typescript,flux,redux,ngrx,action,class)
 
 Boilerplate free class-based action creator. Following [flux-standard-action](https://github.com/redux-utilities/flux-standard-action) spec. Built with TypeScript. Works flawlessly with JavaScript and TypeScript right out of the box.
 
