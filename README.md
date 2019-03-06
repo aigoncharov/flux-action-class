@@ -19,6 +19,10 @@ Boilerplate free class-based action creator. Following [flux-standard-action](ht
     - [Sub-classing](#sub-classing)
     - [Using `setPrefix`](#using-setprefix)
 - [Usage in reducers](#usage-in-reducers)
+- [Usage in production. Minification.](#usage-in-production-minification)
+  - [terser-webpack-plugin](#terser-webpack-plugin)
+  - [create-react-app](#create-react-app)
+  - [Angular](#angular)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -200,7 +204,7 @@ module.exports = {
       }),
     ],
   },
-};
+}
 ```
 
 ### [create-react-app](https://github.com/facebook/create-react-app)
@@ -216,6 +220,3 @@ After that you can follow instructions for tuning terser-webpack-plugin listed a
 ### Angular
 
 Unfortunately, Angular team doesn't allow us to tune Terser with their default builder (please, upvote [this issue](https://github.com/angular/angular-cli/issues/3861) to change it!). You could use this [custom builder](https://github.com/keenondrums/angular-builder-custom-terser-options), which is just a subclass of their default builder with Terser-tuning added.
-
-
-
