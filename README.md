@@ -179,3 +179,43 @@ Be aware, if you're using `switch-case` based reducers, TS compiler is no longer
 Consider going with selecting a reducer from a map by key ([relevant article (go to Tip 3: Switch away from switch)](https://medium.com/@andreygoncharov/yet-another-guide-to-reduce-boilerplate-in-your-redux-ngrx-app-3794a2dd7bf), [Redux's official documentation](https://redux.js.org/recipes/reducing-boilerplate#generating-reducers)) or using [ngrx-actions](https://github.com/amcdnl/ngrx-actions) instead.
 
 You can take a look at the discussion [here](https://github.com/keenondrums/flux-action-class/issues/1)
+
+## Usage in production. Minification.
+
+flux-action-class relies on class names and [Terser (Uglify)](https://github.com/terser-js/terser) by default doesn't preserve class names during minification. Here's what you can do to change that.
+
+### [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin)
+
+Add `keep_classnames: true` (`keep_fnames: true` for ES5 targets) to `terserOptions`.
+
+```js
+module.exports = {
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          // add this line
+          keep_classnames: true,
+        },
+      }),
+    ],
+  },
+};
+```
+
+### [create-react-app](https://github.com/facebook/create-react-app)
+
+CRA doesn't expose Terser config by default (please, upvote [this issue](https://github.com/facebook/create-react-app/issues/6471) to change it!). Rour options are:
+
+- Use [customize-cra](https://github.com/arackaf/customize-cra)
+- Do an `eject`
+- Fork react-scripts (read [this article](https://medium.com/@denis.zhbankov/maintaining-a-fork-of-create-react-app-as-an-alternative-to-ejecting-c555e8eb2b63) for further instructions)
+
+After that you can follow instructions for tuning terser-webpack-plugin listed above.
+
+### Angular
+
+Unfortunately, Angular team doesn't allow us to tune Terser with their default builder (please, upvote [this issue](https://github.com/angular/angular-cli/issues/3861) to change it!). You could use this [custom builder](https://github.com/keenondrums/angular-builder-custom-terser-options), which is just a subclass of their default builder with Terser-tuning added.
+
+
+
